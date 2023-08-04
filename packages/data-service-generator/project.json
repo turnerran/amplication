@@ -4,6 +4,13 @@
   "sourceRoot": "packages/data-service-generator/src",
   "projectType": "application",
   "targets": {
+    "copy-util-logging": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "mkdir -p node_modules/@amplication/util/logging && cp -r dist/libs/util/logging/ node_modules/@amplication/util/logging"
+      },
+      "dependsOn": ["^build"]
+    },
     "build": {
       "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
@@ -87,7 +94,8 @@
         "command": "ts-node -P tsconfig.app.json -r tsconfig-paths/register ./src/main.ts",
         "cwd": "packages/data-service-generator",
         "envFile": "packages/data-service-generator/.env"
-      }
+      },
+      "dependsOn": ["copy-util-logging"]
     },
     "update-snapshot": {
       "executor": "nx:run-commands",
